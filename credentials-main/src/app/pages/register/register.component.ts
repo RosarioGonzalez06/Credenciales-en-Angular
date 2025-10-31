@@ -18,7 +18,7 @@ formRegister;
   constructor(private fb: FormBuilder,private auth: AuthService,private router: Router) {
     this.formRegister = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)]]
     });
   }
 
@@ -47,8 +47,8 @@ formRegister;
 
     case 'password':
       if (c.errors['required']) return 'El campo contraseña es requerido';
-      if (c.errors['minlength'])
-        return `La contraseña debe tener al menos ${c.errors['minlength'].requiredLength} caracteres`;
+      if (c.errors['pattern'])
+        return 'La contraseña debe tener al menos 8 caracteres, una mayuscula, una misnuscula y un numero';
       break;
     default:
       return '';
